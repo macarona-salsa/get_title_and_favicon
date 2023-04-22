@@ -160,18 +160,19 @@ def _get_page_webdriver(
     finished loading
     """
     driver = _start_webdriver(url, page_load_strategy=page_load_strategy)
-
-    # Check for existence of elements
-    driver_wait = WebDriverWait(
-        driver, timeout=timeout, poll_frequency=poll_frequency
-    )
-    for selector in css_selectors:
-        driver_wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+    try:
+        # Check for existence of elements
+        driver_wait = WebDriverWait(
+            driver, timeout=timeout, poll_frequency=poll_frequency
         )
-
-    page_source = driver.page_source
-    driver.quit()
+        for selector in css_selectors:
+            driver_wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+            )
+        page_source = driver.page_source
+    finally:
+        # always close the webdriver
+        driver.quit()
     return page_source
 
 
@@ -183,14 +184,18 @@ def _screenshot_element(
     element has finished loading
     """
     driver = _start_webdriver(url, page_load_strategy=page_load_strategy)
-    driver_wait = WebDriverWait(
-        driver, timeout=timeout, poll_frequency=poll_frequency
-    )
-    element = driver_wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
-    )
-    element_source = element.screenshot_as_base64
-    driver.quit()
+    try:
+        driver_wait = WebDriverWait(
+            driver, timeout=timeout, poll_frequency=poll_frequency
+        )
+        element = driver_wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+        element_source = element.screenshot_as_base64
+        raise Exception("boom")
+    finally:
+        # always close the webdriver
+        driver.quit()
     return element_source
 
 
