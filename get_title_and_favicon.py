@@ -92,12 +92,12 @@ def get_title_and_favicon(url):
         ) from exc
     icon_url = urljoin(url, icon_url)
 
-    # Get favicon and title
-    icon_encoded = _get_favicon_source(icon_url)
+    # Get title and favicon
     try:
         title = str(title_element.string.strip())
     except AttributeError as exc:
         raise ErrorDataNotFound(f"Page title not found! url: {url}") from exc
+    icon_encoded = _get_favicon_source(icon_url)
 
     return title, icon_encoded
 
