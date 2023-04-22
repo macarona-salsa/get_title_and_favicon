@@ -99,7 +99,7 @@ def get_title_and_favicon(url):
     except AttributeError as exc:
         raise ErrorDataNotFound(f"Page title not found! url: {url}") from exc
 
-    return icon_encoded, title
+    return title, icon_encoded
 
 
 def _get_favicon_source(icon_url):
