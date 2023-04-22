@@ -10,6 +10,7 @@ h11==0.14.0
 idna==3.4
 isort==5.12.0
 lazy-object-proxy==1.9.0
+lxml==4.9.2
 mccabe==0.7.0
 outcome==1.2.0
 packaging==23.1
