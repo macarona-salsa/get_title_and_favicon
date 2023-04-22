@@ -1,8 +1,8 @@
 A python script to scrape the title and favicon of any website.
 
 Tries to request page using the python requests module and parses through it
-with beautifulsoup to find title (`<title>` element) and favicon (`<link\>`
-element with rel="icon"), then sends another request for the favicon.
+with beautifulsoup to find title (`<title>` element) and favicon (`<link>`
+element with `rel="icon"`), then sends another request for the favicon.
 
 If the script gets a `HTTP 403`, or fails to find the needed elements and
 there's a `<script>` element on the page (a sign that the website relies on
