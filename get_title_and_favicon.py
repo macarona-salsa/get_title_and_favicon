@@ -102,6 +102,24 @@ def get_title_and_favicon(url):
     return title, icon_encoded
 
 
+def save_favicon(icon_encoded):
+    """
+    Decode a base64 encoded favicon and saves it to disk. File extension
+    is guessed from magic bytes. File will have no extension if mime type
+    couldn't be guessed.
+    """
+    icon = base64.b64decode(icon_encoded)
+
+    # Guess file extension
+    file_magic = magic.from_buffer(icon, mime=True)
+    file_extension = mimetypes.guess_extension(file_magic)
+    if file_extension is None:
+        file_extension = ""
+
+    with open(f"favicon{file_extension}", "wb") as file:
+        file.write(icon)
+
+
 def _get_favicon_source(icon_url):
     """Get base64 source of favicon at url"""
     try:
@@ -128,24 +146,6 @@ def _get_favicon_source(icon_url):
             raise exc1
 
     return icon_encoded
-
-
-def save_favicon(icon_encoded):
-    """
-    Decode a base64 encoded favicon and saves it to disk. File extension
-    is guessed from magic bytes. File will have no extension if mime type
-    couldn't be guessed.
-    """
-    icon = base64.b64decode(icon_encoded)
-
-    # Guess file extension
-    file_magic = magic.from_buffer(icon, mime=True)
-    file_extension = mimetypes.guess_extension(file_magic)
-    if file_extension is None:
-        file_extension = ""
-
-    with open(f"favicon{file_extension}", "wb") as file:
-        file.write(icon)
 
 
 def _get_page_webdriver(
