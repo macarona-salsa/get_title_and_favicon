@@ -192,7 +192,6 @@ def _screenshot_element(
             EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
         )
         element_source = element.screenshot_as_base64
-        raise Exception("boom")
     finally:
         # always close the webdriver
         driver.quit()
